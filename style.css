@@ -1,0 +1,352 @@
+/* ==========================================================================
+   Transvictor Transportes — Landing page institucional (one-page hero)
+   Organização: tokens → base → hero (layout) → marca → tipografia →
+                botões → globo/rota → animações → responsivo
+   ========================================================================== */
+
+/* ---------- Tokens ---------- */
+:root {
+  --bg: #07111B;
+  --bg-2: #0C1926;
+  --gold: #D9AB52;
+  --gold-light: #F5CB70;
+  --gold-dark: #B88A3C;
+  --white: #FFFFFF;
+  --text-2: #D5DAE0;
+  --line: rgba(217, 171, 82, 0.35);
+
+  --font: "Manrope", Arial, sans-serif;
+  --pad-x: clamp(24px, 5.5vw, 96px);
+  --container: 1440px;
+  --radius: 8px;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+
+  /* Tamanho do globo (desktop) */
+  --globe: clamp(780px, 69vw, 1240px);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+/* ---------- Hero: estrutura ---------- */
+.hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  /* Iluminação de fundo: tom complementar atrás do globo + vinheta */
+  background:
+    radial-gradient(60% 75% at 78% 48%, rgba(12, 25, 38, 1) 0%, rgba(12, 25, 38, 0) 70%),
+    radial-gradient(40% 40% at 92% 12%, rgba(217, 171, 82, 0.07) 0%, rgba(217, 171, 82, 0) 70%),
+    var(--bg);
+}
+
+/* Gradiente escuro atrás do texto, integrando globo e conteúdo */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(7, 17, 27, 0.92) 0%, rgba(7, 17, 27, 0.6) 34%, rgba(7, 17, 27, 0) 52%);
+}
+
+.hero__container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--container);
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: clamp(32px, 6vh, 64px) var(--pad-x) clamp(40px, 8vh, 88px);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  row-gap: clamp(40px, 6vh, 72px);
+}
+
+.hero__content {
+  align-self: center;
+  max-width: min(620px, 46vw);
+  padding-bottom: clamp(0px, 4vh, 48px);
+}
+
+/* ---------- Marca ---------- */
+.logo {
+  width: clamp(240px, 21vw, 310px);
+  height: auto;
+}
+
+/* ---------- Tipografia ---------- */
+.hero__title {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(48px, 5vw, 78px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--white);
+}
+
+.hero__title-line { display: block; }
+
+.hero__title-line--gold {
+  color: var(--gold);
+  /* Leve gradiente metálico; cor sólida como fallback */
+  background: linear-gradient(100deg, var(--gold-light) 0%, var(--gold) 45%, var(--gold-dark) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero__text {
+  margin: clamp(28px, 3.4vh, 36px) 0 0;
+  max-width: 620px;
+  font-size: clamp(17px, 1.3vw, 19.5px);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* ---------- Botões ---------- */
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: clamp(32px, 4.4vh, 44px);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 28px;
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease),
+              box-shadow .3s var(--ease), transform .3s var(--ease);
+}
+
+.btn__icon { width: 20px; height: 20px; flex: none; }
+
+.btn--primary {
+  min-width: 168px;
+  background: var(--gold);
+  color: var(--bg);
+  border: 1px solid var(--gold);
+}
+.btn--primary .btn__icon { fill: currentColor; }
+.btn--primary:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+  box-shadow: 0 10px 30px -10px rgba(245, 203, 112, 0.55);
+  transform: translateY(-1px);
+}
+
+.btn--outline {
+  min-width: 152px;
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--gold);
+}
+.btn--outline .btn__icon { color: var(--gold); transition: color .3s var(--ease); }
+.btn--outline:hover {
+  background: rgba(217, 171, 82, 0.1);
+  border-color: var(--gold-light);
+  transform: translateY(-1px);
+}
+.btn--outline:hover .btn__icon { color: var(--gold-light); }
+
+.btn:active { transform: translateY(0); }
+
+.btn:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+}
+
+/* ---------- Globo (camada decorativa) ---------- */
+.hero__visual {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Imagem e SVG compartilham a mesma caixa quadrada → pontos sempre alinhados */
+.globe {
+  position: absolute;
+  width: var(--globe);
+  aspect-ratio: 1 / 1;
+  right: calc(var(--globe) * -0.06);
+  top: 52%;
+  transform: translateY(-50%);
+}
+
+.globe__img,
+.route {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Rota Brasil → EUA ---------- */
+.route__track {
+  fill: none;
+  stroke: var(--gold);
+  stroke-opacity: 0.22;
+  stroke-width: 1.4;
+  stroke-dasharray: 2 7;
+  stroke-linecap: round;
+}
+
+.route__line,
+.route__glow {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* Estado padrão (sem JS / movimento reduzido): rota completa e estática */
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 0;
+}
+.route__line { stroke: url(#routeGrad); stroke-width: 2.6; stroke-dasharray: none; }
+.route__glow { stroke: var(--gold-light); stroke-width: 9; stroke-opacity: 0.16; stroke-dasharray: none; }
+
+.route__arrow { fill: var(--gold-light); }
+
+.marker__ring { fill: rgba(7, 17, 27, 0.65); stroke: var(--gold-light); stroke-width: 2; }
+.marker__core { fill: var(--gold-light); }
+.marker__pulse { fill: none; stroke: var(--gold-light); stroke-width: 1.6; opacity: 0; }
+
+/* Rótulos (unidades do viewBox 1000×1000) */
+.label__line { fill: none; stroke: var(--line); stroke-width: 1.2; }
+.label__dot { fill: var(--gold); }
+.label__title,
+.label__sub {
+  font-family: var(--font);
+  paint-order: stroke;
+  stroke: rgba(7, 17, 27, 0.85);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.label__title { font-size: 25px; font-weight: 700; fill: var(--white); letter-spacing: -0.01em; }
+.label__sub { font-size: 17.5px; font-weight: 500; fill: var(--gold); letter-spacing: 0.02em; }
+
+/* Animação controlada pelo script.js (classe aplicada só se o movimento for permitido) */
+.route.is-animated .route__line,
+.route.is-animated .route__glow { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.route.is-animated .route__arrow { opacity: 0; }
+
+/* ---------- Entrada do conteúdo ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: reveal .9s var(--ease) forwards;
+}
+.hero__title.reveal   { animation-delay: .12s; }
+.hero__text.reveal    { animation-delay: .24s; }
+.hero__actions.reveal { animation-delay: .36s; }
+
+.globe { animation: fadeIn 1.4s var(--ease) both; }
+
+@keyframes reveal { to { opacity: 1; transform: none; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ==========================================================================
+   Responsivo
+   ========================================================================== */
+
+/* Desktop intermediário: conteúdo mais compacto para não invadir o globo */
+@media (max-width: 1280px) {
+  :root { --globe: clamp(780px, 74vw, 1240px); }
+  .globe { right: calc(var(--globe) * -0.1); }
+}
+
+/* Tablet e mobile: coluna única, globo integrado abaixo do conteúdo */
+@media (max-width: 1023px) {
+  .hero__container {
+    min-height: 0;
+    grid-template-rows: auto auto;
+    row-gap: clamp(36px, 6vw, 56px);
+    padding-top: 36px;
+    padding-bottom: 0;
+  }
+
+  .hero__content { max-width: 600px; padding-bottom: 0; }
+
+  /* Em coluna, o texto não fica sobre o globo: o degradê vira uma máscara no topo do visual */
+  .hero::before { display: none; }
+
+  .hero__visual {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    height: 80vw;
+    margin-top: 8px;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 14%);
+  }
+
+  .globe {
+    --globe: 105vw;
+    top: -14vw;
+    right: auto;
+    left: -2vw;
+    transform: none;
+  }
+
+  /* No fluxo em coluna, o visual vem após o conteúdo */
+  .hero { display: flex; flex-direction: column; }
+  .hero__container { order: 1; }
+  .hero__visual { order: 2; }
+}
+
+@media (max-width: 767px) {
+  :root { --pad-x: 22px; }
+
+  .logo { width: 236px; }
+
+  .hero__title { font-size: clamp(36px, 11vw, 44px); line-height: 1.08; }
+  .hero__text { font-size: 15.5px; line-height: 1.65; margin-top: 22px; }
+
+  .hero__actions { flex-direction: column; gap: 12px; margin-top: 28px; }
+  .btn { width: 100%; height: 54px; }
+
+  .hero__visual { height: 124vw; margin-top: 4px; }
+
+  /* Enquadra Brasil, EUA e a rota no centro da tela */
+  .globe { --globe: 160vw; left: -52vw; top: -16vw; }
+
+  .label__title { font-size: 30px; }
+  .label__sub { font-size: 21px; }
+}
+
+/* ---------- Movimento reduzido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .globe { animation: none; opacity: 1; transform: none; }
+  .btn { transition: none; }
+  .btn:hover { transform: none; }
+}
